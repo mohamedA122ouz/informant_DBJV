@@ -25,7 +25,16 @@ public class InformantDB {
     static protected EntityManagerFactory factory = Persistence.createEntityManagerFactory("informantDBPU");
     static protected EntityManager manager = factory.createEntityManager();
     static protected EntityTransaction transaction = manager.getTransaction();
-
+    public static String listAds(){
+        Query q = manager.createNamedQuery("Ads.findAll",Ads.class);
+       List<Ads> ads = (List<Ads>) q.getResultList();
+       String list = "[\n";
+       for(var i : ads){
+           list += ads +"\n";
+       }
+       list += "\n]";
+        return list;
+    }
     static public String SignIn(UserInput user, String token) throws InterruptedException {
         try {
             if (user != null) {
@@ -288,12 +297,16 @@ public class InformantDB {
             System.out.println("q:Up - sign up user");
             System.out.println("q:tK - sign in user with token ");
             System.out.println("q:ch - change user data ");
+            System.out.println("q:li - list available ads");
             System.out.println("q:E - Exit ");
             System.out.print("Enter Command (\"don't forget ((q:)) before the query\"): ");
             Scanner c = new Scanner(System.in);
             String ss = c.nextLine();
             Command(ss);
-            if (ss.toLowerCase().contains("q:e")) {
+            if (ss.toLowerCase().contains("q:li")) {
+                System.out.println(listAds());
+            }
+            else if (ss.toLowerCase().contains("q:e")) {
                 break;
             }
         } while (true);

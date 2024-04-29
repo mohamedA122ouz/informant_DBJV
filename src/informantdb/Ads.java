@@ -181,7 +181,17 @@ public class Ads implements Serializable {
 
     @Override
     public String toString() {
-        return "informantdb.Ads[ id=" + id + " ]";
+//        return "informantdb.Ads[ id=" + id + " ]";
+        String details = "Ad:";
+        details += "{\nDetails: " + this.getDetails();
+        details += "\ncreator ID: " + this.getCreatorID().getId();
+        details += "\nID: " + this.getId();
+        details += "\nImage: " + this.getImageId();
+        details += "\nPayment: " + this.getPaymentId();
+        details += "\nprice: " + this.getPrice();
+        details += "\nToken: " + this.getStars();
+        details += "\n}: ";
+        return details;
     }
-    
+
 }
