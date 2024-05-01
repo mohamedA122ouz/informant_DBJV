@@ -159,7 +159,7 @@ public class InformantDB {
         if (!token.contains("Error::")) {
             User signedInUser = users.get(token).currentUser;
             System.out.println("DETAILS :: " + signedInUser);
-            System.out.print("Enter what you data you change: ");
+            System.out.print("Enter what data you want to change: ");
             String tempS = u.nextLine();
             transaction.begin();
             if (tempS.toLowerCase().contains("email")) {
