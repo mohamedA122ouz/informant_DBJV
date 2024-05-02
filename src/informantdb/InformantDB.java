@@ -26,6 +26,24 @@ public class InformantDB {
     static protected EntityManager manager = factory.createEntityManager();
     static protected EntityTransaction transaction = manager.getTransaction();
 
+    static public String del(long id) {
+        try {
+            transaction.begin();
+            Ads ad = manager.find(Ads.class, id);
+            if (ad != null) {
+                manager.remove(ad);
+                transaction.commit();
+                return ad + " is removed successfully";
+            } else {
+                transaction.rollback();
+                return "Ad not found";
+            }
+        } catch (Exception ex) {
+            transaction.rollback();
+            return ex.getMessage();
+        }
+    }
+
     public static String listAds() {
         Query q = manager.createNamedQuery("Ads.findAll", Ads.class);
         List<Ads> ads = (List<Ads>) q.getResultList();
@@ -253,6 +271,12 @@ public class InformantDB {
                 AfterSignIn(tokenOrError);
             }
         }
+        else if (command.toLowerCase().contains("dl")) {
+
+            System.out.print("Enter Ad id: ");
+            long id = u.nextLong();
+            System.out.println(del(id));
+        }
     }
 
     static public String insert(IAd i, User uu) {
@@ -339,6 +363,7 @@ public class InformantDB {
             System.out.println("q:Up - sign up user");
             System.out.println("q:tK - sign in user with token ");
             System.out.println("q:ch - change user data ");
+            System.out.println("q:dl - delete advertisement from database ");
             System.out.println("q:li - list available ads");
             System.out.println("q:E - Exit ");
             System.out.print("%q:");
